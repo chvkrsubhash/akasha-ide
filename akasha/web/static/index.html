@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Online Akasha Compiler - Programiz Style</title>
+  <meta name="description" content="Write, run, and share Akasha code online with our free and fast online compiler." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="compiler-app">
+    <!-- Top Header -->
+    <header class="navbar">
+      <div class="nav-left">
+        <div class="logo">
+          <span class="logo-accent">Akasha</span> Online Compiler
+        </div>
+      </div>
+
+      <div class="nav-center">
+        <div class="example-picker">
+          <label for="example-select">Sample:</label>
+          <select id="example-select" class="dropdown">
+            <option value="">Loading samples...</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="nav-right">
+        <button id="btn-run" class="btn btn-run" title="Run Code (Ctrl + Enter)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Run</span>
+        </button>
+
+        <button id="btn-clear-code" class="btn btn-outline" title="Clear or Reset Editor">
+          <span>Clear Editor</span>
+        </button>
+
+        <button id="btn-copy-code" class="btn btn-outline" title="Copy Code">
+          <span>Copy</span>
+        </button>
+
+        <button id="btn-download" class="btn btn-outline" title="Download Source File">
+          <span>Download</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+      <!-- Editor Column (Left) -->
+      <section class="pane editor-pane">
+        <div class="pane-tab-bar">
+          <div class="tab active">
+            <span class="tab-title">main.akasha</span>
+          </div>
+          <div class="editor-quick-tools">
+            <button id="btn-font-dec" class="text-tool-btn" title="Decrease Font">A-</button>
+            <button id="btn-font-inc" class="text-tool-btn" title="Increase Font">A+</button>
+          </div>
+        </div>
+
+        <div class="editor-body">
+          <div class="gutter" id="gutter"></div>
+          <div class="code-zone">
+            <pre class="syntax-backdrop" id="syntax-backdrop" aria-hidden="true"><code id="syntax-code"></code></pre>
+            <textarea id="code-input" class="code-textarea" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" placeholder="// Type your Akasha code here..."></textarea>
+          </div>
+        </div>
+
+        <div class="pane-footer">
+          <span id="cursor-pos">Line 1, Column 1</span>
+          <span id="code-stats">0 lines</span>
+        </div>
+      </section>
+
+      <!-- Output Column (Right) -->
+      <section class="pane output-pane">
+        <div class="pane-tab-bar">
+          <div class="tab active">
+            <span class="tab-title">Output</span>
+          </div>
+          <div class="output-actions">
+            <span id="exec-time" class="exec-time-text"></span>
+            <button id="btn-clear-output" class="text-tool-btn">Clear</button>
+          </div>
+        </div>
+
+        <div class="output-body">
+          <pre class="terminal" id="terminal-output">Press 'Run' to execute the code.</pre>
+        </div>
+
+        <div class="pane-footer">
+          <span id="status-text">Ready</span>
+        </div>
+      </section>
+    </main>
+
+    <!-- Global Toast Notification -->
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

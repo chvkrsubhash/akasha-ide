@@ -1,0 +1,5 @@
+-- Hello World in Akasha
+-- The simplest Akasha program
+
+cheppu("Namaste, Akasha!")
+cheppu("Hello, World!")

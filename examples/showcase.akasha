@@ -1,0 +1,94 @@
+--- Comprehensive Akasha showcase ---
+-- Demonstrates the full v0.1 feature set
+
+cheppu("=== Akasha Language v0.1 Showcase ===")
+cheppu("")
+
+-- 1. Variables and types
+viluva name = "Akasha"
+viluva version = 1
+viluva stable = nijam
+viluva pi_approx = 3.14159
+
+cheppu(f"Language: {name} v{version}")
+cheppu(f"Stable: {stable}")
+cheppu(f"Pi approx: {pi_approx}")
+cheppu("")
+
+-- 2. Collections
+viluva primes = [2, 3, 5, 7, 11, 13]
+viluva info = {"language": "Akasha", "version": 1, "origin": "Telugu"}
+
+cheppu(f"First 6 primes: {primes}")
+cheppu(f"Language info: {info}")
+cheppu("")
+
+-- 3. Function: FizzBuzz
+cheppu("=== FizzBuzz 1..20 ===")
+
+karyam fizzbuzz(n: Sankhya): Padam {
+    okavela n % 15 == 0 {
+        phalitham "FizzBuzz"
+    } mariyu n % 3 == 0 {
+        phalitham "Fizz"
+    } mariyu n % 5 == 0 {
+        phalitham "Buzz"
+    } lekapothe {
+        phalitham Padam(n)
+    }
+}
+
+prathi i lo 1..21 {
+    cheppu(f"  {i}: {fizzbuzz(i)}")
+}
+cheppu("")
+
+-- 4. Sorting (bubble sort in Akasha)
+cheppu("=== Bubble Sort ===")
+
+karyam bubble_sort(arr) {
+    viluva n = parimaanam(arr)
+    prathi i lo 0..n {
+        prathi j lo 0..(n - i - 1) {
+            okavela arr[j] > arr[j + 1] {
+                viluva temp = arr[j]
+                arr[j] = arr[j + 1]
+                arr[j + 1] = temp
+            }
+        }
+    }
+    phalitham arr
+}
+
+viluva unsorted = [64, 34, 25, 12, 22, 11, 90]
+cheppu(f"Before: {unsorted}")
+viluva sorted = bubble_sort(unsorted)
+cheppu(f"After:  {sorted}")
+cheppu("")
+
+-- 5. String operations
+cheppu("=== String operations ===")
+viluva msg = "Namaste, Akasha!"
+cheppu(f"Original:  {msg}")
+cheppu(f"Upper:     {msg.upper()}")
+cheppu(f"Lower:     {msg.lower()}")
+cheppu(f"Length:    {msg.length()}")
+cheppu(f"Contains 'Akasha': {msg.contains('Akasha')}")
+cheppu("")
+
+-- 6. Closures and higher-order functions
+cheppu("=== Higher-order functions ===")
+
+karyam compose(f, g) {
+    phalitham muppu(x) => f(g(x))
+}
+
+viluva add_one = muppu(x) => x + 1
+viluva square  = muppu(x) => x * x
+viluva square_then_add = compose(add_one, square)
+
+cheppu(f"square_then_add(4) = {square_then_add(4)}")  -- (4^2) + 1 = 17
+cheppu(f"square_then_add(9) = {square_then_add(9)}")  -- (9^2) + 1 = 82
+
+cheppu("")
+cheppu("=== Akasha showcase complete! ===")

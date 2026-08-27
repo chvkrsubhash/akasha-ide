@@ -1,0 +1,36 @@
+--- 
+Variables and Constants example
+Demonstrates: viluva, sthiram, types, f-strings
+---
+
+-- Variables (mutable by default)
+viluva peru = "Subhash"
+viluva vayasu = 22
+viluva visaalu = 5.8
+
+-- Constants (immutable)
+sthiram PI = 3.14159
+sthiram desham = "India"
+
+-- Type-annotated
+viluva sankhya: Sankhya = 100
+
+cheppu(f"Peru: {peru}")
+cheppu(f"Vayasu: {vayasu}")
+cheppu(f"Desham: {desham}")
+cheppu(f"PI viluva: {PI}")
+cheppu(f"Sankhya: {sankhya}")
+
+-- Arithmetic
+viluva a = 10
+viluva b = 3
+cheppu(f"a + b = {a + b}")
+cheppu(f"a - b = {a - b}")
+cheppu(f"a * b = {a * b}")
+cheppu(f"a / b = {a / b}")
+cheppu(f"a % b = {a % b}")
+cheppu(f"a ** b = {a ** b}")
+
+-- String concatenation
+viluva namaste = "Namaste " + peru + "!"
+cheppu(namaste)

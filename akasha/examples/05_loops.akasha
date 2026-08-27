@@ -1,0 +1,65 @@
+--- Loops in Akasha ---
+-- prathi (for-each), alaa (while), loop (infinite + aapu)
+
+-- For-each over array
+cheppu("=== prathi loop (array) ===")
+viluva fruits = ["manga", "arati", "nimma"]
+prathi fruit lo fruits {
+    cheppu(f"  Pandu: {fruit}")
+}
+
+-- For-each over range
+cheppu("=== prathi loop (range 1..6) ===")
+prathi i lo 1..6 {
+    cheppu(f"  {i}")
+}
+
+-- While loop
+cheppu("=== alaa loop ===")
+viluva count = 1
+alaa count <= 5 {
+    cheppu(f"  Count: {count}")
+    count = count + 1
+}
+
+-- Loop with break
+cheppu("=== loop with aapu (break) ===")
+viluva n = 0
+loop {
+    n = n + 1
+    okavela n > 5 {
+        aapu
+    }
+    cheppu(f"  n = {n}")
+}
+
+-- Loop with continue
+cheppu("=== prathi with konasaginchu (skip evens) ===")
+prathi x lo 1..11 {
+    okavela x % 2 == 0 {
+        konasaginchu
+    }
+    cheppu(f"  Odd: {x}")
+}
+
+-- Nested loops
+cheppu("=== Nested loops (multiplication table 3x3) ===")
+prathi i lo 1..4 {
+    prathi j lo 1..4 {
+        viluva product = i * j
+        cheppu(f"  {i} x {j} = {product}")
+    }
+}
+
+-- Array methods (map, filter, reduce)
+cheppu("=== Array methods ===")
+viluva numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+viluva doubled = numbers.map(muppu(x) => x * 2)
+cheppu(f"doubled: {doubled}")
+
+viluva evens = numbers.filter(muppu(x) => x % 2 == 0)
+cheppu(f"evens: {evens}")
+
+viluva sum = numbers.reduce(muppu(acc, x) => acc + x, 0)
+cheppu(f"sum: {sum}")

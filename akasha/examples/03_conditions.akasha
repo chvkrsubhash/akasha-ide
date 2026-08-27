@@ -1,0 +1,52 @@
+--- Conditions in Akasha ---
+-- okavela / mariyu / lekapothe
+
+viluva vayasu = 20
+
+okavela vayasu >= 18 {
+    cheppu("Pedda manishi (Adult)")
+} lekapothe {
+    cheppu("Chinna pilladu (Minor)")
+}
+
+-- Multi-branch (else-if)
+viluva score = 85
+
+okavela score >= 90 {
+    cheppu("Grade: A+")
+} mariyu score >= 80 {
+    cheppu("Grade: A")
+} mariyu score >= 70 {
+    cheppu("Grade: B")
+} mariyu score >= 60 {
+    cheppu("Grade: C")
+} lekapothe {
+    cheppu("Grade: Failed")
+}
+
+-- Boolean operators
+viluva hasID = nijam
+viluva hasMoney = nijam
+
+okavela hasID && hasMoney {
+    cheppu("Can enter")
+} lekapothe {
+    cheppu("Cannot enter")
+}
+
+-- Null check
+viluva value = shunyam
+
+okavela value == shunyam {
+    cheppu("Value is shunyam (null)")
+}
+
+-- Match statement
+viluva rang = "pachcha"
+
+tirugu rang {
+    sthithi "erra"    => cheppu("Red / Erra")
+    sthithi "pachcha" => cheppu("Green / Pachcha")
+    sthithi "neelam"  => cheppu("Blue / Neelam")
+    default           => cheppu("Unknown color")
+}
