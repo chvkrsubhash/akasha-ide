@@ -138,9 +138,21 @@ class AkashaIDE:
         self.current_file: Optional[str] = None
         self.current_theme = "dark"
 
+        # Load window icon
+        logo_path = _HERE / "logo.png"
+        if not logo_path.exists():
+            logo_path = _ROOT / "logo.png"
+        if logo_path.exists():
+            try:
+                self.logo_img = tk.PhotoImage(file=str(logo_path))
+                self.root.iconphoto(True, self.logo_img)
+            except Exception:
+                pass
+
         self._setup_ui()
         self._setup_shortcuts()
         self._load_template()
+
 
     def _setup_ui(self) -> None:
         """Create the IDE layout and widgets."""

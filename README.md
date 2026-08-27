@@ -1,6 +1,11 @@
 # Akasha Desktop IDE
 
+<p align="center">
+  <img src="logo.png" alt="Akasha Logo" width="200" />
+</p>
+
 > **Native Desktop Code Editor & Development Environment for Akasha**
+
 
 A lightweight, zero-dependency desktop code editor and IDE designed specifically for the **Akasha** programming language.
 
