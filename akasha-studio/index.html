@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akasha Studio — Desktop Application</title>
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="desktop-app-body theme-vscode-dark">
+
+  <!-- Desktop App Container -->
+  <div class="app-root">
+
+    <!-- 1. Native Desktop Titlebar -->
+    <header class="app-titlebar" id="app-titlebar">
+      <!-- App Brand & Menus -->
+      <div class="titlebar-left">
+        <div class="app-logo-box">
+          <img src="logo.png" alt="Akasha Logo" class="app-title-logo">
+        </div>
+        <div class="app-menu-bar">
+          <div class="menu-item" onclick="toggleMenu('file-menu')">File
+            <div class="menu-dropdown hidden" id="file-menu">
+              <div class="menu-option" onclick="newFile()"><span class="opt-label">New File</span><span class="opt-shortcut">Ctrl+N</span></div>
+              <div class="menu-option" onclick="openFilePrompt()"><span class="opt-label">Open File...</span><span class="opt-shortcut">Ctrl+O</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="saveActiveFile()"><span class="opt-label">Save</span><span class="opt-shortcut">Ctrl+S</span></div>
+              <div class="menu-option" onclick="saveFileAsPrompt()"><span class="opt-label">Save As...</span><span class="opt-shortcut">Ctrl+Shift+S</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="closeActiveTab()"><span class="opt-label">Close Tab</span><span class="opt-shortcut">Ctrl+W</span></div>
+            </div>
+          </div>
+          <div class="menu-item" onclick="toggleMenu('edit-menu')">Edit
+            <div class="menu-dropdown hidden" id="edit-menu">
+              <div class="menu-option" onclick="execEdit('undo')"><span class="opt-label">Undo</span><span class="opt-shortcut">Ctrl+Z</span></div>
+              <div class="menu-option" onclick="execEdit('redo')"><span class="opt-label">Redo</span><span class="opt-shortcut">Ctrl+Y</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="execEdit('cut')"><span class="opt-label">Cut</span><span class="opt-shortcut">Ctrl+X</span></div>
+              <div class="menu-option" onclick="execEdit('copy')"><span class="opt-label">Copy</span><span class="opt-shortcut">Ctrl+C</span></div>
+              <div class="menu-option" onclick="execEdit('paste')"><span class="opt-label">Paste</span><span class="opt-shortcut">Ctrl+V</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="execEdit('selectAll')"><span class="opt-label">Select All</span><span class="opt-shortcut">Ctrl+A</span></div>
+            </div>
+          </div>
+          <div class="menu-item" onclick="toggleMenu('view-menu')">View
+            <div class="menu-dropdown hidden" id="view-menu">
+              <div class="menu-option" onclick="toggleSidebar()"><span class="opt-label">Toggle Primary Side Bar</span><span class="opt-shortcut">Ctrl+B</span></div>
+              <div class="menu-option" onclick="togglePanel()"><span class="opt-label">Toggle Terminal Panel</span><span class="opt-shortcut">Ctrl+J</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="setTheme('theme-vscode-dark')"><span class="opt-label">Theme: VS Code Dark+</span></div>
+              <div class="menu-option" onclick="setTheme('theme-tokyo-night')"><span class="opt-label">Theme: Tokyo Night</span></div>
+              <div class="menu-option" onclick="setTheme('theme-github-light')"><span class="opt-label">Theme: GitHub Light</span></div>
+            </div>
+          </div>
+          <div class="menu-item" onclick="toggleMenu('run-menu')">Run
+            <div class="menu-dropdown hidden" id="run-menu">
+              <div class="menu-option" onclick="runScript()"><span class="opt-label">Start Debugging / Run</span><span class="opt-shortcut">F5</span></div>
+              <div class="menu-option" onclick="disassembleScript()"><span class="opt-label">Compile to Bytecode (.akb)</span><span class="opt-shortcut">Ctrl+B</span></div>
+              <div class="menu-option" onclick="checkSyntax()"><span class="opt-label">Check Syntax</span><span class="opt-shortcut">F7</span></div>
+              <div class="menu-divider"></div>
+              <div class="menu-option" onclick="clearTerminal()"><span class="opt-label">Clear Terminal</span><span class="opt-shortcut">Ctrl+L</span></div>
+            </div>
+          </div>
+          <div class="menu-item" onclick="toggleMenu('help-menu')">Help
+            <div class="menu-dropdown hidden" id="help-menu">
+              <div class="menu-option" onclick="openDocsModal()"><span class="opt-label">Akasha Documentation</span></div>
+              <div class="menu-option" onclick="openAboutModal()"><span class="opt-label">About Akasha Studio</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centered Command Palette Search Bar -->
+      <div class="titlebar-center">
+        <button class="command-palette-btn" onclick="openCommandPalette()">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span class="cmd-text">Akasha Studio — Type to search files & commands (Ctrl+P)</span>
+        </button>
+      </div>
+
+      <!-- Window Control Buttons (Native Desktop Feel) -->
+      <div class="titlebar-right">
+        <button class="win-control-btn btn-min" title="Minimize" onclick="windowMinimize()">—</button>
+        <button class="win-control-btn btn-max" title="Maximize" onclick="windowMaximize()">▢</button>
+        <button class="win-control-btn btn-close" title="Close" onclick="windowClose()">✕</button>
+      </div>
+    </header>
+
+    <!-- 2. Main Workbench Body -->
+    <div class="app-workbench">
+
+      <!-- Left Activity Bar (48px rail) -->
+      <aside class="activity-bar">
+        <div class="activity-top">
+          <button class="activity-btn active" id="act-explorer" title="Explorer (Ctrl+Shift+E)" onclick="switchActivity('explorer')">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/></svg>
+          </button>
+          <button class="activity-btn" id="act-run" title="Run & Debug (Ctrl+Shift+D)" onclick="runScript()">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button class="activity-btn" id="act-samples" title="Samples Library" onclick="switchActivity('samples')">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </button>
+          <button class="activity-btn" id="act-bytecode" title="Bytecode Disassembler" onclick="disassembleScript()">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6M9 17h4"/></svg>
+          </button>
+        </div>
+        <div class="activity-bottom">
+          <button class="activity-btn" id="act-settings" title="Settings" onclick="openSettingsModal()">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Sidebar Panel (Collapsible) -->
+      <section class="sidebar-panel" id="sidebar-panel">
+        <div class="sidebar-header">
+          <span class="sidebar-title" id="sidebar-title">EXPLORER</span>
+          <div class="sidebar-actions">
+            <button class="sidebar-action-btn" title="New File" onclick="newFile()">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </button>
+            <button class="sidebar-action-btn" title="Refresh" onclick="loadWorkspaceFiles()">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="sidebar-content">
+          <!-- Section 1: Open Editors -->
+          <div class="sidebar-section">
+            <div class="section-title-bar" onclick="toggleSection('sec-open-editors')">
+              <span class="twistie">▾</span>
+              <span class="section-name">OPEN EDITORS</span>
+            </div>
+            <div class="section-body" id="sec-open-editors">
+              <ul class="file-list" id="open-editors-list"></ul>
+            </div>
+          </div>
+
+          <!-- Section 2: Workspace Files -->
+          <div class="sidebar-section">
+            <div class="section-title-bar" onclick="toggleSection('sec-workspace')">
+              <span class="twistie">▾</span>
+              <span class="section-name">AKASHA WORKSPACE</span>
+            </div>
+            <div class="section-body" id="sec-workspace">
+              <ul class="file-list" id="workspace-files-list">
+                <li class="file-list-empty">Loading workspace...</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Section 3: Samples Library -->
+          <div class="sidebar-section">
+            <div class="section-title-bar" onclick="toggleSection('sec-samples')">
+              <span class="twistie">▾</span>
+              <span class="section-name">SAMPLES LIBRARY</span>
+            </div>
+            <div class="section-body" id="sec-samples">
+              <ul class="file-list" id="samples-library-list"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sidebar Horizontal Resizer -->
+      <div class="resizer-h" id="resizer-sidebar"></div>
+
+      <!-- Center Main Editor & Terminal Panel -->
+      <main class="main-editor-area">
+
+        <!-- Top Editor Tab Strip -->
+        <div class="tabs-header-bar">
+          <div class="tabs-scroll-container" id="tabs-container">
+            <!-- Dynamic Editor Tabs Injected Here -->
+          </div>
+
+          <!-- Editor Actions Right -->
+          <div class="editor-action-tools">
+            <button class="tool-btn btn-run-action" title="Run Code (F5)" onclick="runScript()">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>Run</span>
+            </button>
+            <button class="tool-btn" title="Bytecode Disassembler (Ctrl+B)" onclick="disassembleScript()">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6M9 13h6"/></svg>
+              <span>Bytecode</span>
+            </button>
+            <button class="tool-btn" title="Check Syntax (F7)" onclick="checkSyntax()">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Check</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Breadcrumbs Navigation -->
+        <div class="breadcrumbs-bar">
+          <span class="crumb-root">workspace</span>
+          <span class="crumb-sep">›</span>
+          <span class="crumb-folder">examples</span>
+          <span class="crumb-sep">›</span>
+          <span class="crumb-active-file" id="crumb-filename">main.akasha</span>
+        </div>
+
+        <!-- Editor View Area -->
+        <div class="code-editor-viewport" id="editor-viewport">
+          <div class="editor-gutter" id="editor-gutter">1</div>
+          <div class="editor-canvas-wrapper">
+            <!-- Highlight Overlay Canvas -->
+            <pre class="editor-highlight-layer" id="editor-highlight" aria-hidden="true"></pre>
+            <!-- Native Input Textarea -->
+            <textarea class="editor-textarea" id="editor-textarea" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off"></textarea>
+          </div>
+        </div>
+
+        <!-- Bottom Panel Vertical Resizer -->
+        <div class="resizer-v" id="resizer-panel"></div>
+
+        <!-- Bottom Panel (Terminal, Bytecode, Output, Problems) -->
+        <div class="bottom-panel" id="bottom-panel">
+          <!-- Panel Header -->
+          <div class="panel-header-bar">
+            <div class="panel-tabs">
+              <button class="panel-tab-btn active" id="tab-btn-terminal" onclick="switchPanelTab('terminal')">TERMINAL</button>
+              <button class="panel-tab-btn" id="tab-btn-bytecode" onclick="switchPanelTab('bytecode')">BYTECODE (.AKB)</button>
+              <button class="panel-tab-btn" id="tab-btn-problems" onclick="switchPanelTab('problems')">PROBLEMS <span class="badge" id="problems-count">0</span></button>
+            </div>
+            <div class="panel-actions">
+              <span class="exec-time-badge" id="exec-time-badge"></span>
+              <button class="panel-btn" title="Clear Console (Ctrl+L)" onclick="clearTerminal()">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+              </button>
+              <button class="panel-btn" title="Toggle Maximize" onclick="togglePanelMaximize()">▲</button>
+              <button class="panel-btn" title="Close Panel" onclick="togglePanel()">✕</button>
+            </div>
+          </div>
+
+          <!-- Panel Body: Terminal Pane -->
+          <div class="panel-pane-content active" id="pane-terminal">
+            <div class="terminal-console" id="terminal-output">
+              <div class="term-line term-system">Akasha Stack VM Runtime v0.1.0 ready.</div>
+              <div class="term-line term-system">Press [F5] or click Run to execute the active file.</div>
+            </div>
+          </div>
+
+          <!-- Panel Body: Bytecode Disassembly Pane -->
+          <div class="panel-pane-content" id="pane-bytecode">
+            <div class="bytecode-view-container" id="bytecode-output">
+              <div class="bytecode-empty">Compile or run code to view generated bytecode opcodes.</div>
+            </div>
+          </div>
+
+          <!-- Panel Body: Problems Pane -->
+          <div class="panel-pane-content" id="pane-problems">
+            <div class="problems-view-container" id="problems-output">
+              <div class="problems-empty">✓ No problems detected in the workspace.</div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- 3. VS Code Blue Bottom Status Bar -->
+    <footer class="app-statusbar">
+      <div class="statusbar-left">
+        <div class="status-item git-branch" title="Git Branch">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 2a3 3 0 00-3 3c0 1.3.84 2.4 2 2.82v8.36a3.001 3.001 0 102 0V7.82c1.16-.42 2-1.52 2-2.82a3 3 0 00-3-3zm0 2a1 1 0 110 2 1 1 0 010-2zM6 8a3 3 0 00-3 3c0 1.3.84 2.4 2 2.82v2.36a3.001 3.001 0 102 0v-2.36c1.16-.42 2-1.52 2-2.82a3 3 0 00-3-3zm0 2a1 1 0 110 2 1 1 0 010-2z"/></svg>
+          <span>main*</span>
+        </div>
+        <div class="status-item errors-stat" id="status-errors" title="Problems">
+          <span>⨂ 0  ⚠ 0</span>
+        </div>
+        <div class="status-item status-msg" id="status-msg">Ready</div>
+      </div>
+      <div class="statusbar-right">
+        <div class="status-item cursor-stat" id="status-cursor">Ln 1, Col 1</div>
+        <div class="status-item indent-stat">Spaces: 4</div>
+        <div class="status-item encoding-stat">UTF-8</div>
+        <div class="status-item eol-stat">CRLF</div>
+        <div class="status-item lang-stat">Akasha</div>
+        <div class="status-item vm-stat">✓ VM Online</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Command Palette Modal (Ctrl+P) -->
+  <div class="modal-overlay hidden" id="cmd-palette-modal" onclick="closeCommandPalette(event)">
+    <div class="cmd-palette-box" onclick="event.stopPropagation()">
+      <div class="cmd-palette-input-wrapper">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="cmd-palette-input" id="cmd-palette-input" placeholder="Type a command or file name..." autofocus>
+      </div>
+      <ul class="cmd-palette-list" id="cmd-palette-list"></ul>
+    </div>
+  </div>
+
+  <!-- Documentation Modal -->
+  <div class="modal-overlay hidden" id="docs-modal" onclick="closeDocsModal(event)">
+    <div class="dialog-box" onclick="event.stopPropagation()">
+      <div class="dialog-header">
+        <h3>Akasha Language Reference</h3>
+        <button class="dialog-close-btn" onclick="closeDocsModal()">✕</button>
+      </div>
+      <div class="dialog-body">
+        <table class="docs-ref-table">
+          <thead><tr><th>Keyword</th><th>Telugu Meaning</th><th>Description / Example</th></tr></thead>
+          <tbody>
+            <tr><td><code>cheppu(...)</code></td><td>చెప్పు (Tell / Print)</td><td>Outputs values to the console.</td></tr>
+            <tr><td><code>viluva</code></td><td>విలువ (Value)</td><td>Declares a mutable variable: <code>viluva x = 10</code></td></tr>
+            <tr><td><code>sthiram</code></td><td>స్థిరం (Constant)</td><td>Declares an immutable constant: <code>sthiram PI = 3.14</code></td></tr>
+            <tr><td><code>okavela</code></td><td>ఒకవేళ (If)</td><td>Conditional branch: <code>okavela x > 0 { }</code></td></tr>
+            <tr><td><code>mariyu</code></td><td>మరియు (And / Else if)</td><td>Additional branch or logical AND.</td></tr>
+            <tr><td><code>lekapothe</code></td><td>లేకపోతే (Else)</td><td>Fallback conditional branch.</td></tr>
+            <tr><td><code>prathi ... lo</code></td><td>ప్రతి ... లో (For-each)</td><td>Loop iteration: <code>prathi i lo 0..10 { }</code></td></tr>
+            <tr><td><code>alaa</code></td><td>అలా (While)</td><td>While loop: <code>alaa count > 0 { }</code></td></tr>
+            <tr><td><code>karyam</code></td><td>కార్యం (Function)</td><td>Function declaration: <code>karyam add(a, b) { }</code></td></tr>
+            <tr><td><code>phalitham</code></td><td>ఫలితం (Result / Return)</td><td>Returns value from function: <code>phalitham a + b</code></td></tr>
+            <tr><td><code>muppu</code></td><td>ముప్పు (Closure / Lambda)</td><td>Anonymous lambda: <code>muppu(x) => x * 2</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1015 @@
+/* ==========================================================================
+   Akasha Studio — Native Desktop Application Styling
+   Modeled with pixel-perfection after Visual Studio Code Dark+
+   ========================================================================== */
+
+:root {
+  /* VS Code Dark+ Theme Tokens */
+  --bg-app: #1e1e1e;
+  --bg-titlebar: #323233;
+  --bg-activity: #333333;
+  --bg-sidebar: #252526;
+  --bg-sidebar-header: #252526;
+  --bg-tab-active: #1e1e1e;
+  --bg-tab-inactive: #2d2d2d;
+  --bg-tab-hover: #2a2d2e;
+  --bg-editor: #1e1e1e;
+  --bg-gutter: #1e1e1e;
+  --bg-panel: #181818;
+  --bg-terminal: #0f172a;
+  --bg-statusbar: #007acc;
+  --bg-dropdown: #252526;
+  --bg-hover: #2a2d2e;
+  --bg-selection: #264f78;
+  --bg-input: #3c3c3c;
+  
+  --fg-main: #cccccc;
+  --fg-titlebar: #cccccc;
+  --fg-sidebar: #cccccc;
+  --fg-tab-active: #ffffff;
+  --fg-tab-inactive: #969696;
+  --fg-editor: #d4d4d4;
+  --fg-gutter: #858585;
+  --fg-statusbar: #ffffff;
+  --fg-muted: #858585;
+  
+  --border-color: #333333;
+  --border-active: #007acc;
+  --accent-blue: #007acc;
+  --accent-green: #16a34a;
+  --accent-hover: #15803d;
+  
+  /* VS Code Dark+ Syntax Coloring Tokens */
+  --tok-keyword: #c586c0;     /* Pink/Magenta */
+  --tok-type: #4ec9b0;        /* Cyan/Teal */
+  --tok-string: #ce9178;      /* Salmon/Orange */
+  --tok-fstring: #9cdcfe;     /* Light Sky Blue */
+  --tok-number: #b5cea8;      /* Light Green */
+  --tok-comment: #6a9955;     /* Muted Green */
+  --tok-func: #dcdcaa;        /* Soft Yellow */
+  --tok-builtin: #4fc1ff;     /* Cyan */
+  --tok-variable: #9cdcfe;    /* Variable light blue */
+  
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+}
+
+/* Tokyo Night Theme */
+body.theme-tokyo-night {
+  --bg-app: #1a1b26;
+  --bg-titlebar: #16161e;
+  --bg-activity: #16161e;
+  --bg-sidebar: #1f2335;
+  --bg-tab-active: #1a1b26;
+  --bg-tab-inactive: #16161e;
+  --bg-editor: #1a1b26;
+  --bg-panel: #16161e;
+  --bg-terminal: #13141c;
+  --bg-statusbar: #7aa2f7;
+  --fg-statusbar: #15161e;
+  --border-color: #292e42;
+  --accent-blue: #7aa2f7;
+}
+
+/* GitHub Light Theme */
+body.theme-github-light {
+  --bg-app: #ffffff;
+  --bg-titlebar: #f6f8fa;
+  --bg-activity: #f6f8fa;
+  --bg-sidebar: #f6f8fa;
+  --bg-tab-active: #ffffff;
+  --bg-tab-inactive: #f3f4f6;
+  --bg-editor: #ffffff;
+  --bg-gutter: #ffffff;
+  --bg-panel: #f8fafc;
+  --bg-terminal: #0f172a;
+  --bg-statusbar: #0969da;
+  --fg-main: #1f2328;
+  --fg-titlebar: #1f2328;
+  --fg-sidebar: #1f2328;
+  --fg-tab-active: #1f2328;
+  --fg-tab-inactive: #656d76;
+  --fg-editor: #1f2328;
+  --fg-gutter: #8c959f;
+  --border-color: #d0d7de;
+  --tok-keyword: #cf222e;
+  --tok-type: #0550ae;
+  --tok-string: #0a3069;
+  --tok-comment: #6e7781;
+  --tok-func: #8250df;
+}
+
+/* Reset & Desktop Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--fg-main);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 1. App Root Container */
+.app-root {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-app);
+}
+
+/* 2. Native Desktop Titlebar */
+.app-titlebar {
+  height: 35px;
+  background: var(--bg-titlebar);
+  color: var(--fg-titlebar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 6px 0 10px;
+  z-index: 1000;
+}
+
+.titlebar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-logo-box {
+  display: flex;
+  align-items: center;
+}
+
+.app-title-logo {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.app-menu-bar {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
+.menu-item {
+  position: relative;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--fg-titlebar);
+}
+
+.menu-item:hover {
+  background: var(--bg-hover);
+  color: #ffffff;
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  background: var(--bg-dropdown);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  min-width: 180px;
+  padding: 4px 0;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+  z-index: 2000;
+}
+
+.menu-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--fg-main);
+}
+
+.menu-option:hover {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
+
+.opt-shortcut {
+  font-size: 10px;
+  color: var(--fg-muted);
+  margin-left: 16px;
+}
+
+.menu-option:hover .opt-shortcut {
+  color: rgba(255,255,255,0.8);
+}
+
+.menu-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 4px 0;
+}
+
+/* Centered Command Palette Search Bar */
+.titlebar-center {
+  flex: 1;
+  max-width: 460px;
+  margin: 0 16px;
+}
+
+.command-palette-btn {
+  width: 100%;
+  height: 24px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--fg-muted);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: all 0.15s ease;
+}
+
+.command-palette-btn:hover {
+  background: var(--bg-input);
+  border-color: #555555;
+  color: var(--fg-main);
+}
+
+/* Window Control Buttons */
+.titlebar-right {
+  display: flex;
+  align-items: center;
+}
+
+.win-control-btn {
+  width: 44px;
+  height: 35px;
+  background: transparent;
+  border: none;
+  color: var(--fg-titlebar);
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.win-control-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.win-control-btn.btn-close:hover {
+  background: #e81123;
+  color: #ffffff;
+}
+
+/* 3. Main Workbench Layout */
+.app-workbench {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Activity Bar (Left 48px rail) */
+.activity-bar {
+  width: 48px;
+  background: var(--bg-activity);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-right: 1px solid var(--border-color);
+  z-index: 10;
+}
+
+.activity-top, .activity-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.activity-btn {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: none;
+  color: #858585;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s ease;
+}
+
+.activity-btn:hover {
+  color: #ffffff;
+}
+
+.activity-btn.active {
+  color: #ffffff;
+}
+
+.activity-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent-blue);
+}
+
+/* Sidebar Panel */
+.sidebar-panel {
+  width: 230px;
+  min-width: 170px;
+  max-width: 400px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.sidebar-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #bbbbbb;
+}
+
+.sidebar-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.sidebar-action-btn {
+  background: transparent;
+  border: none;
+  color: #858585;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-action-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #ffffff;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sidebar-section {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #888888;
+  cursor: pointer;
+}
+
+.section-title-bar:hover {
+  color: #ffffff;
+}
+
+.twistie {
+  font-size: 10px;
+  display: inline-block;
+  transition: transform 0.15s ease;
+}
+
+.section-body.collapsed {
+  display: none;
+}
+
+.file-list {
+  list-style: none;
+  padding: 2px 0 6px 0;
+}
+
+.file-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px 4px 22px;
+  font-size: 12.5px;
+  color: var(--fg-sidebar);
+  cursor: pointer;
+}
+
+.file-list-item:hover {
+  background: var(--bg-hover);
+  color: #ffffff;
+}
+
+.file-list-item.active {
+  background: var(--bg-selection);
+  color: #ffffff;
+}
+
+.file-list-empty {
+  padding: 6px 22px;
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+
+/* Horizontal & Vertical Split Resizers */
+.resizer-h {
+  width: 3px;
+  cursor: col-resize;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.resizer-h:hover, .resizer-h.resizing {
+  background: var(--accent-blue);
+}
+
+.resizer-v {
+  height: 3px;
+  cursor: row-resize;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.resizer-v:hover, .resizer-v.resizing {
+  background: var(--accent-blue);
+}
+
+/* 4. Main Editor Workspace Area */
+.main-editor-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-editor);
+  overflow: hidden;
+}
+
+/* Top Tab Strip */
+.tabs-header-bar {
+  height: 35px;
+  background: var(--bg-tab-inactive);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.tabs-scroll-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  overflow-x: auto;
+}
+
+.tabs-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.editor-tab {
+  height: 35px;
+  background: var(--bg-tab-inactive);
+  color: var(--fg-tab-inactive);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 12px;
+  cursor: pointer;
+  border-right: 1px solid var(--border-color);
+  border-top: 2px solid transparent;
+  user-select: none;
+  min-width: 120px;
+  max-width: 180px;
+  transition: background 0.1s ease;
+}
+
+.editor-tab:hover {
+  background: var(--bg-tab-hover);
+  color: #ffffff;
+}
+
+.editor-tab.active {
+  background: var(--bg-tab-active);
+  color: var(--fg-tab-active);
+  border-top-color: var(--accent-blue);
+}
+
+.tab-title-text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab-dirty-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: none;
+}
+
+.editor-tab.dirty .tab-dirty-dot {
+  display: block;
+}
+
+.tab-close-btn {
+  font-size: 12px;
+  color: inherit;
+  padding: 2px 4px;
+  border-radius: 3px;
+  opacity: 0.7;
+}
+
+.tab-close-btn:hover {
+  background: rgba(255,255,255,0.15);
+  opacity: 1;
+}
+
+/* Editor Action Tools Right */
+.editor-action-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+}
+
+.tool-btn {
+  background: var(--bg-hover);
+  border: 1px solid var(--border-color);
+  color: var(--fg-main);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tool-btn:hover {
+  background: var(--bg-input);
+  color: #ffffff;
+}
+
+.tool-btn.btn-run-action {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.tool-btn.btn-run-action:hover {
+  background: var(--accent-hover);
+}
+
+/* Breadcrumbs Bar */
+.breadcrumbs-bar {
+  height: 22px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--fg-muted);
+  background: var(--bg-editor);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.crumb-sep {
+  font-size: 9px;
+}
+
+.crumb-active-file {
+  color: var(--fg-main);
+}
+
+/* Code Editor Canvas Area */
+.code-editor-viewport {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-editor);
+}
+
+.editor-gutter {
+  width: 48px;
+  background: var(--bg-gutter);
+  color: var(--fg-gutter);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: right;
+  padding: 8px 10px 8px 0;
+  user-select: none;
+  white-space: pre-line;
+  border-right: 1px solid rgba(255,255,255,0.03);
+  overflow: hidden;
+}
+
+.editor-canvas-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.editor-highlight-layer, .editor-textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 8px 12px;
+  margin: 0;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  tab-size: 4;
+  white-space: pre;
+  word-wrap: normal;
+  overflow: auto;
+}
+
+.editor-highlight-layer {
+  background: transparent;
+  color: var(--fg-editor);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.editor-textarea {
+  background: transparent;
+  color: transparent;
+  caret-color: #569cd6;
+  resize: none;
+  outline: none;
+  z-index: 2;
+}
+
+.editor-textarea::selection {
+  background: var(--bg-selection);
+}
+
+/* Syntax Color Tokens */
+.tok-keyword { color: var(--tok-keyword); font-weight: bold; }
+.tok-type { color: var(--tok-type); font-weight: bold; }
+.tok-string { color: var(--tok-string); }
+.tok-fstring { color: var(--tok-fstring); }
+.tok-number { color: var(--tok-number); }
+.tok-comment { color: var(--tok-comment); font-style: italic; }
+.tok-func { color: var(--tok-func); }
+.tok-builtin { color: var(--tok-builtin); }
+
+/* 5. Bottom Panel (Terminal, Bytecode, Problems) */
+.bottom-panel {
+  height: 220px;
+  min-height: 120px;
+  background: var(--bg-panel);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-header-bar {
+  height: 32px;
+  background: var(--bg-sidebar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.panel-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.panel-tab-btn {
+  background: transparent;
+  border: none;
+  color: #888888;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-top: 2px solid transparent;
+}
+
+.panel-tab-btn:hover {
+  color: #ffffff;
+}
+
+.panel-tab-btn.active {
+  color: #ffffff;
+  border-top-color: var(--accent-blue);
+  background: var(--bg-panel);
+}
+
+.panel-tab-btn .badge {
+  background: #3c3c3c;
+  color: #ffffff;
+  padding: 1px 5px;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.exec-time-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #10b981;
+}
+
+.panel-btn {
+  background: transparent;
+  border: none;
+  color: #858585;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.panel-btn:hover {
+  color: #ffffff;
+  background: rgba(255,255,255,0.1);
+}
+
+.panel-pane-content {
+  flex: 1;
+  display: none;
+  overflow: auto;
+}
+
+.panel-pane-content.active {
+  display: block;
+}
+
+/* Terminal Console View */
+.terminal-console {
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 19px;
+  background: var(--bg-terminal);
+  color: #f8fafc;
+  min-height: 100%;
+}
+
+.term-line {
+  white-space: pre-wrap;
+}
+
+.term-cmd { color: #38bdf8; }
+.term-success { color: #4ade80; }
+.term-error { color: #f87171; }
+.term-system { color: #94a3b8; }
+
+/* Bytecode Disassembler Table View */
+.bytecode-view-container {
+  padding: 10px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.bytecode-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bytecode-table th {
+  text-align: left;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--fg-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bytecode-table td {
+  padding: 4px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.opcode-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 11px;
+  background: #312e81;
+  color: #c7d2fe;
+}
+
+.opcode-badge.const { background: #064e3b; color: #a7f3d0; }
+.opcode-badge.jump { background: #701a75; color: #f5d0fe; }
+.opcode-badge.call { background: #7c2d12; color: #fed7aa; }
+
+.bytecode-empty, .problems-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--fg-muted);
+  font-size: 12px;
+}
+
+/* 6. VS Code Blue Bottom Status Bar */
+.app-statusbar {
+  height: 22px;
+  background: var(--bg-statusbar);
+  color: var(--fg-statusbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 11.5px;
+  z-index: 1000;
+}
+
+.statusbar-left, .statusbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+.status-item:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* 7. Floating Command Palette Modal (Ctrl+P) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+  z-index: 5000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.cmd-palette-box {
+  width: 580px;
+  max-width: 90vw;
+  background: var(--bg-dropdown);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+.cmd-palette-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cmd-palette-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  outline: none;
+}
+
+.cmd-palette-list {
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.cmd-palette-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  font-size: 12.5px;
+  color: var(--fg-main);
+  cursor: pointer;
+}
+
+.cmd-palette-item:hover, .cmd-palette-item.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+}
+
+/* 8. Dialog Reference Tables */
+.dialog-box {
+  width: 680px;
+  max-width: 92vw;
+  background: var(--bg-dropdown);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dialog-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--fg-muted);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dialog-body {
+  padding: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.docs-ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.docs-ref-table th, .docs-ref-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.docs-ref-table th {
+  background: rgba(255,255,255,0.04);
+}
+
+.docs-ref-table code {
+  font-family: var(--font-mono);
+  color: #93c5fd;
+}
